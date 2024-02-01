@@ -16,11 +16,13 @@
         "eslint-staged": "^1.0.1",
         "eslit": "^6.0.0",
         "framer-motion": "^11.0.3",
+        "html-to-image": "^1.11.11",
         "lucide": "^0.320.0",
         "lucide-react": "^0.320.0",
         "prettier": "^3.2.4",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
+        "react-qr-code": "^2.0.12",
         "react-scripts": "5.0.1",
         "typescript": "^4.9.5",
         "web-vitals": "^2.1.4"
