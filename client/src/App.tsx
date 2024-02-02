@@ -1,11 +1,14 @@
-import { X } from "lucide-react";
 import React from "react";
+import "./index.css";
+import { CreateOrder, Header, Orders } from "./components";
 
 function App() {
     return (
-        <div>
-            <X />
-        </div>
+        <>
+            <Header />
+            <Orders />
+            <CreateOrder />
+        </>
     );
 }
 
