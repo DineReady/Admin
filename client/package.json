@@ -1,6 +1,7 @@
 {
     "name": "client",
     "version": "0.1.0",
+    "proxy": "http://localhost:8080",
     "private": true,
     "dependencies": {
         "@chakra-ui/react": "^2.8.2",
@@ -54,6 +55,7 @@
         ]
     },
     "devDependencies": {
+        "axios": "^1.6.7",
         "clsx": "^2.1.0",
         "husky": "^9.0.10",
         "nanoid": "^5.0.5",
