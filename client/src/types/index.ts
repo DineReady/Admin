@@ -16,9 +16,9 @@ export interface IAllOrders {
 }
 
 export enum OrderStatus {
-    Active = "active",
-    Pending = "pending",
     Complete = "complete",
+    Pending = "pending",
+    Active = "active",
     Declined = "declined",
     Taken = "taken",
 }

@@ -3,21 +3,32 @@ import { IMain, IOrder, OrderStatus } from "../../types";
 import AllOrders from "./all_orders/AllOrders";
 
 const Main = ({ orders }: IMain) => {
-    const [active, setActive] = useState<IOrder[]>([]);
-    const [pending, setPending] = useState<IOrder[]>([]);
-    const [complete, setComplete] = useState<IOrder[]>([]);
+    const [ordersByStatus, setOrdersByStatus] = useState<{
+        [key in OrderStatus]: IOrder[];
+    }>();
 
     useEffect(() => {
-        setActive(orders.filter((order) => order.status === "active"));
-        setPending(orders.filter((order) => order.status === "pending"));
-        setComplete(orders.filter((order) => order.status === "complete"));
+        const groupedOrders = orders.reduce(
+            (acc, order) => {
+                acc[order.status] = [...(acc[order.status] || []), order];
+                return acc;
+            },
+            {} as { [key in OrderStatus]: IOrder[] },
+        );
+
+        setOrdersByStatus(groupedOrders);
     }, [orders]);
 
     return (
         <div className="h-full w-screen">
-            <AllOrders orders={pending} status={OrderStatus.Complete} />
-            <AllOrders orders={pending} status={OrderStatus.Pending} />
-            <AllOrders orders={active} status={OrderStatus.Active} />
+            {ordersByStatus &&
+                Object.entries(ordersByStatus).map(([status, orders]) => (
+                    <AllOrders
+                        key={status}
+                        orders={orders}
+                        status={status as OrderStatus}
+                    />
+                ))}
         </div>
     );
 };

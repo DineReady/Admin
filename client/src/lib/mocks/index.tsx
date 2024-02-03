@@ -48,6 +48,13 @@ export const options = [
 
 export const mock: IOrder[] = [
     { status: OrderStatus.Active, id: "1" },
+    { status: OrderStatus.Active, id: "6" },
     { status: OrderStatus.Pending, id: "2" },
+    { status: OrderStatus.Pending, id: "2" },
+    { status: OrderStatus.Pending, id: "2" },
+    { status: OrderStatus.Pending, id: "2" },
+    { status: OrderStatus.Pending, id: "2" },
+    { status: OrderStatus.Pending, id: "4" },
+    { status: OrderStatus.Pending, id: "5" },
     { status: OrderStatus.Complete, id: "3" },
 ];
