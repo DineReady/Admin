@@ -1,6 +1,6 @@
 /* eslint-disable linebreak-style */
 import { Check, ChefHat, Cookie, Trash2 } from "lucide-react";
-import { IOrder, OrderStatus } from "../../types";
+import { OrderStatus } from "../../types";
 import React from "react";
 
 export const options = [
