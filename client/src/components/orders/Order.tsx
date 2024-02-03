@@ -2,6 +2,7 @@ import React from "react";
 import { IOrder } from "../../types";
 import { options } from "../../lib/mocks";
 import clsx from "clsx";
+import { Tooltip } from "@chakra-ui/react";
 
 const Order = ({ status, id }: IOrder) => {
     return (
@@ -12,31 +13,38 @@ const Order = ({ status, id }: IOrder) => {
             </div>
             <section className="w-full flex items-center justify-end pt-2 gap-x-2">
                 {options.map((option) => (
-                    <div
+                    <Tooltip
+                        hasArrow
+                        label={option.value.toUpperCase()}
+                        bg="gray.300"
+                        color="black"
                         key={option.value}
-                        className={`text-2xl font-black text-zinc-400 hover:${
-                            option.color
-                        } ${
-                            status === option.value
-                                ? "opacity-50 cursor-not-allowed"
-                                : "cursor-pointer"
-                        }`}
                     >
-                        <button
-                            className={clsx(
-                                "",
+                        <div
+                            className={`text-2xl font-black text-zinc-400 hover:${
+                                option.color
+                            } ${
                                 status === option.value
                                     ? "opacity-50 cursor-not-allowed"
-                                    : "cursor-pointer",
-                            )}
-                            disabled={status === option.value}
-                            onClick={() => {
-                                console.log(status, id);
-                            }}
+                                    : "cursor-pointer"
+                            }`}
                         >
-                            {option.icon}
-                        </button>
-                    </div>
+                            <button
+                                className={clsx(
+                                    "",
+                                    status === option.value
+                                        ? "opacity-50 cursor-not-allowed"
+                                        : "cursor-pointer",
+                                )}
+                                disabled={status === option.value}
+                                onClick={() => {
+                                    console.log(status, id);
+                                }}
+                            >
+                                {option.icon}
+                            </button>
+                        </div>
+                    </Tooltip>
                 ))}
             </section>
         </button>

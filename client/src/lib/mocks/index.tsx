@@ -46,7 +46,7 @@ export const options = [
     },
 ];
 
-export const mock: IOrder[] = [
+export const mock = [
     { status: OrderStatus.Active, id: "1" },
     { status: OrderStatus.Active, id: "6" },
     { status: OrderStatus.Pending, id: "2" },

@@ -23,6 +23,14 @@ export enum OrderStatus {
     Taken = "taken",
 }
 
+export enum OrderStatusHoverLabel {
+    Active = "Active",
+    Pending = "Pending",
+    Complete = "Complete",
+    Declined = "Decline",
+    Taken = "Taken",
+}
+
 export enum OrderStatusColor {
     Active = "bg-blue-500",
     Pending = "bg-orange-500",
