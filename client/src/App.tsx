@@ -1,15 +1,14 @@
 import React from "react";
 import "./index.css";
-import { CreateOrder, Header, Orders } from "./components";
+import { CreateOrder, Header, Main } from "./components";
+import { mock } from "./lib/mocks";
 
-function App() {
+export default function App(): JSX.Element {
     return (
         <>
-            <Header />
-            <Orders />
+            <Header orders={mock.length} />
+            <Main orders={mock} />
             <CreateOrder />
         </>
     );
 }
-
-export default App;
