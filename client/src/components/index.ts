@@ -1,8 +1,7 @@
 import Order from "./orders/Order";
-import PendingOrders from "./orders/pending/PendingOrders";
-import ActiveOrders from "./orders/active/ActiveOrders";
+import AllOrders from "./orders/all_orders/AllOrders";
 import CreateOrder from "./orders/CreateOrder";
 import Main from "./orders/Main";
 import Header from "./constants/Header";
 
-export { Order, Header, CreateOrder, Main, PendingOrders, ActiveOrders };
+export { Order, Header, CreateOrder, Main, AllOrders };

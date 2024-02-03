@@ -3,5 +3,7 @@
     "useTabs": false,
     "semi": true,
     "doubleQuote": true,
-    "endOfLine": "lf"
+    "endOfLine": "lf",
+    "trailingComma": "all",
+    "bracketSpacing": true
 }
