@@ -1,6 +1,6 @@
 /* eslint-disable linebreak-style */
 import { Check, ChefHat, Cookie, Trash2 } from "lucide-react";
-import { OrderStatus } from "../../types";
+import { IOrder, OrderStatus } from "../../types";
 import React from "react";
 
 export const options = [
@@ -44,4 +44,10 @@ export const options = [
         ),
         color: "text-emerald-500",
     },
+];
+
+export const mock: IOrder[] = [
+    { status: OrderStatus.Active, id: "1" },
+    { status: OrderStatus.Pending, id: "2" },
+    { status: OrderStatus.Complete, id: "3" },
 ];
