@@ -1,7 +1,7 @@
 /* eslint-disable indent */
 /* eslint-disable quotes */
 import React, { useEffect, useState } from "react";
-import { IAllOrders, OrderStatusColor } from "../../../types";
+import { IAllOrders, IOrder, OrderStatusColor } from "../../../types";
 import Order from "../Order";
 
 const AllOrders = ({ orders, status }: IAllOrders): JSX.Element => {
@@ -30,7 +30,7 @@ const AllOrders = ({ orders, status }: IAllOrders): JSX.Element => {
                 {status.toUpperCase()}
             </header>
             <section className="flex w-full items-center justify-start gap-2 flex-wrap overflow-x-auto">
-                {orders.map((order) => (
+                {orders.map((order: IOrder) => (
                     <Order key={order.id} status={order.status} id={order.id} />
                 ))}
             </section>
