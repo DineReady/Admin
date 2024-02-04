@@ -40,5 +40,3 @@ app.get("/orders", (req: Request, res: Response) => allOrders(req, res, db));
 app.listen(PORT, (): void =>
     console.log(`[server] Server is running at http://localhost:${PORT}`),
 );
-
-//TODO: proxy in FE doesnt work
