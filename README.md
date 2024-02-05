@@ -18,7 +18,7 @@ npm run fmt
 ```bash
 cd client/
 npm install
-npm run dev
+npm run start
 ```
 ### Server
 ```bash
