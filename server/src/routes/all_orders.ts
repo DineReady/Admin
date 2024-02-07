@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
-import { Database, Statement } from "sqlite3";
+import { Statement } from "sqlite3";
+import { db } from "../db";
 
 export default async function allOrders(
     req: Request,
     res: Response,
-    db: Database,
 ): Promise<void> {
     try {
         db.all("SELECT * FROM orders", (err: Error | null, rows: Statement) => {

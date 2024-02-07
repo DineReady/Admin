@@ -1,13 +1,13 @@
-import { OrderStatus } from "../../types";
+// import { OrderStatus } from "../../types";
 
 export const sql: string = `
     CREATE TABLE IF NOT EXISTS orders (
-        id INTEGER PRIMARY KEY,
+        id TEXT PRIMARY KEY,
         status TEXT CHECK (status IN (
-            '${OrderStatus.Complete}',
-            '${OrderStatus.Pending}',
-            '${OrderStatus.Declined}',
-            '${OrderStatus.Taken}'
+            'complete',
+            'pending',
+            'declined',
+            'taken'
         ))
     )
 `;

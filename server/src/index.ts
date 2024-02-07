@@ -1,32 +1,14 @@
 /* eslint-disable quotes */
 import express, { Express, Request, Response } from "express";
-import sqlite, { Database } from "sqlite3";
 import cors from "cors";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
-import path from "path";
-import { sql } from "./db/temp_queries";
 import { allOrders, allOrdersId } from "./routes";
+import { db, sql } from "./db";
 
 dotenv.config();
-sqlite.verbose();
-
-{
-    /* ============================= DATABASE ========================== */
-}
-const db_file_name: string = "dine_ready.db";
-const db_dir_name: string = "db";
 const app: Express = express();
 const PORT: number = 8080;
-const db_path: string = path.resolve(__dirname, db_dir_name, db_file_name);
-const db: Database = new sqlite.Database(
-    db_path,
-    sqlite.OPEN_READWRITE,
-    (err: Error | null): void => {
-        if (err) console.error(err.message);
-        console.log(`[server] Connected to the ${db_file_name}`);
-    },
-);
 
 db.run(sql, (err: Error | null): void => {
     if (err) console.error(err.message);
@@ -44,10 +26,8 @@ app.use(express.json());
 {
     /* ============================= ROUTES ============================= */
 }
-app.get("/orders", (req: Request, res: Response) => allOrders(req, res, db));
-app.get("/orders/id", (req: Request, res: Response) =>
-    allOrdersId(req, res, db),
-);
+app.get("/orders", (req: Request, res: Response) => allOrders(req, res));
+app.get("/orders/id", (req: Request, res: Response) => allOrdersId(req, res));
 
 app.listen(PORT, (): void =>
     console.log(`[server] Server is running at http://localhost:${PORT}`),
