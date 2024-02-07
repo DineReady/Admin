@@ -6,11 +6,14 @@ import bodyParser from "body-parser";
 import dotenv from "dotenv";
 import path from "path";
 import { sql } from "./db/temp_queries";
-import { allOrders } from "./routes";
+import { allOrders, allOrdersId } from "./routes";
 
 dotenv.config();
 sqlite.verbose();
 
+{
+    /* ============================= DATABASE ========================== */
+}
 const db_file_name: string = "dine_ready.db";
 const db_dir_name: string = "db";
 const app: Express = express();
@@ -30,12 +33,21 @@ db.run(sql, (err: Error | null): void => {
     console.log('[server] Table "orders" exists or was created successfully');
 });
 
+{
+    /* ============================= MIDDLEWARE ========================== */
+}
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.json());
 
+{
+    /* ============================= ROUTES ============================= */
+}
 app.get("/orders", (req: Request, res: Response) => allOrders(req, res, db));
+app.get("/orders/id", (req: Request, res: Response) =>
+    allOrdersId(req, res, db),
+);
 
 app.listen(PORT, (): void =>
     console.log(`[server] Server is running at http://localhost:${PORT}`),

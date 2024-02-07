@@ -6,7 +6,6 @@ export const sql: string = `
         status TEXT CHECK (status IN (
             '${OrderStatus.Complete}',
             '${OrderStatus.Pending}',
-            '${OrderStatus.Active}',
             '${OrderStatus.Declined}',
             '${OrderStatus.Taken}'
         ))
