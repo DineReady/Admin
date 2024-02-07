@@ -29,6 +29,4 @@ app.use(express.json());
 app.get("/orders", (req: Request, res: Response) => allOrders(req, res));
 app.get("/orders/id", (req: Request, res: Response) => allOrdersId(req, res));
 
-app.listen(PORT, (): void =>
-    console.log(`[server] Server is running at http://localhost:${PORT}`),
-);
+app.listen(PORT, (): void => console.log(`\n[server] Server is running at http://localhost:${PORT}`));

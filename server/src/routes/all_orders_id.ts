@@ -1,69 +1,33 @@
-/* eslint-disable quotes */
 import { Request, Response } from "express";
-import { Statement } from "sqlite3";
-import { OrderStatus } from "../../types";
 import { db } from "../db";
+import { v4 as uuidv4 } from "uuid";
 
-export default async function allOrdersId(
-    req: Request,
-    res: Response,
-): Promise<void> {
+export default async function allOrdersId(req: Request, res: Response): Promise<void> {
+    let uniqueId: string = uuidv4();
+
     try {
-        // Dynamic import for nanoid
-        import("nanoid").then((nanoidModule) => {
-            const { nanoid } = nanoidModule;
+        const all_id_orders_query: string = "SELECT id FROM orders";
+        db.all(all_id_orders_query, async (err: Error | null, rows: { id: string }[]) => {
+            if (err) {
+                throw err;
+            }
+            const existingOrderIds: string[] = rows.map((row: { id: string }) => row.id);
+            let isUnique = !existingOrderIds.includes(uniqueId);
 
-            insertOrder(nanoid)
-                .then((statement: Statement) => {
-                    statement.finalize((err: Error | null) => {
-                        if (err) throw err;
-                        res.status(201).send("Order created");
-                    });
-                })
-                .catch((error: unknown) => {
-                    console.error((error as Error).message);
-                    res.status(500).send("Server error");
-                })
-                .finally(() => {
-                    db.close((err: Error | null) => {
-                        if (err) console.error(err.message);
-                        console.log("[server] Database connection closed");
-                    });
-                });
+            while (!isUnique) {
+                uniqueId = uuidv4();
+                isUnique = !existingOrderIds.includes(uniqueId);
+            }
+
+            res.status(200).json({ uniqueId });
+        });
+
+        db.run("INSERT INTO orders (id, status) VALUES (?, ?)", [uniqueId, "pending"], (err: Error | null) => {
+            if (err) throw err;
+            console.log(`[server] Order with ID ${uniqueId} added`);
         });
     } catch (error: unknown) {
         console.error((error as Error).message);
         res.status(500).send("Server error");
-    }
-}
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-async function insertOrder(nanoid: any): Promise<Statement> {
-    const id: string = nanoid(6);
-    const status: string = OrderStatus.Pending;
-
-    const all_orders_id_query: string = `SELECT id FROM orders WHERE id = '${id}'`;
-
-    const all_orders_id = await new Promise((resolve, reject) => {
-        db.all(all_orders_id_query, (err, rows) => {
-            if (err) reject(err);
-            resolve(rows);
-        });
-    });
-
-    if (all_orders_id) return insertOrder(nanoid);
-    else {
-        const insert_order_query: string = `INSERT INTO orders (id, status) VALUES ('${id}', '${status}')`;
-
-        return new Promise((resolve, reject): void => {
-            db.run(insert_order_query, (err) => {
-                if (err) reject(err);
-                else resolve(
-                    db.prepare(
-                        `SELECT * FROM orders WHERE id = '${id}'`
-                    )
-                );
-            });
-        });
     }
 }

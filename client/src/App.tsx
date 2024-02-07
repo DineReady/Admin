@@ -1,7 +1,7 @@
 import React from "react";
 import "./index.css";
 import { CreateOrder, Header, Main } from "./components";
-import { mock } from "./lib/mocks";
+import { mock } from "./lib";
 
 export default function App(): JSX.Element {
     return (

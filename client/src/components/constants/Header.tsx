@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { IHeader } from "../../types";
-import getCurrentTime from "../../lib/utils/timeUtils";
+import { getCurrentTime } from "../../lib";
 
 const Header = ({ orders }: IHeader) => {
     const [currTime, setCurrTime] = useState("");
