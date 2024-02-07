@@ -9,9 +9,6 @@ const AllOrders = ({ orders, status }: IAllOrders): JSX.Element => {
 
     useEffect(() => {
         switch (status) {
-            case "active":
-                setOrderStatus(OrderStatusColor.Active);
-                break;
             case "pending":
                 setOrderStatus(OrderStatusColor.Pending);
                 break;
@@ -19,18 +16,28 @@ const AllOrders = ({ orders, status }: IAllOrders): JSX.Element => {
                 setOrderStatus(OrderStatusColor.Complete);
                 break;
             default:
-                setOrderStatus(OrderStatusColor.Active);
+                setOrderStatus(OrderStatusColor.Pending);
                 break;
         }
     }, [status]);
 
+    const pendingOrders = orders.filter((order) => order.status === "pending");
+    const completeOrders = orders.filter(
+        (order) => order.status === "complete",
+    );
+
     return (
-        <main className={`${orderStatus} px-10 py-5`}>
+        <main className={`${orderStatus} px-10 py-5 flex flex-col`}>
             <header className="text-2xl font-black pb-3">
                 {status.toUpperCase()}
             </header>
-            <section className="flex w-full items-center justify-start gap-2 flex-wrap overflow-x-auto">
-                {orders.map((order: IOrder) => (
+            <section className="flex items-center justify-start gap-2 flex-wrap overflow-x-auto">
+                {pendingOrders.map((order: IOrder) => (
+                    <Order key={order.id} status={order.status} id={order.id} />
+                ))}
+            </section>
+            <section className="flex items-center justify-start gap-2 flex-wrap overflow-x-auto">
+                {completeOrders.map((order: IOrder) => (
                     <Order key={order.id} status={order.status} id={order.id} />
                 ))}
             </section>

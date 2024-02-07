@@ -18,13 +18,11 @@ export interface IAllOrders {
 export enum OrderStatus {
     Complete = "complete",
     Pending = "pending",
-    Active = "active",
     Declined = "declined",
     Taken = "taken",
 }
 
 export enum OrderStatusHoverLabel {
-    Active = "Active",
     Pending = "Pending",
     Complete = "Complete",
     Declined = "Decline",
@@ -32,7 +30,6 @@ export enum OrderStatusHoverLabel {
 }
 
 export enum OrderStatusColor {
-    Active = "bg-blue-500",
     Pending = "bg-orange-500",
     Complete = "bg-green-500",
     Declined = "bg-red-500",
