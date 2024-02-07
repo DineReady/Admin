@@ -27,11 +27,20 @@ const AllOrders = ({ orders, status }: IAllOrders): JSX.Element => {
     );
 
     return (
-        <main className={`${orderStatus} px-10 py-5 flex flex-col`}>
+        <main
+            style={{
+                maxWidth: "668px",
+                padding: "10px",
+                paddingTop: "5px",
+                paddingBottom: "5px",
+                display: "",
+            }}
+            className={`${orderStatus} flex`}
+        >
             <header className="text-2xl font-black pb-3">
                 {status.toUpperCase()}
             </header>
-            <section className="flex items-center justify-start gap-2 flex-wrap overflow-x-auto">
+            <section className="flex items-center justify-start gap-2 flex-wrap overflow-x-auto margin-top-50px">
                 {pendingOrders.map((order: IOrder) => (
                     <Order key={order.id} status={order.status} id={order.id} />
                 ))}
