@@ -2,10 +2,7 @@ import { Request, Response } from "express";
 import { Statement } from "sqlite3";
 import { db } from "../db";
 
-export default async function allOrders(
-    req: Request,
-    res: Response,
-): Promise<void> {
+export default async function allOrders(req: Request, res: Response): Promise<void> {
     try {
         db.all("SELECT * FROM orders", (err: Error | null, rows: Statement) => {
             if (err) {
