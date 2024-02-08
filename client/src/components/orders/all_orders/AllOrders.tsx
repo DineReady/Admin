@@ -27,16 +27,7 @@ const AllOrders = ({ orders, status }: IAllOrders): JSX.Element => {
     );
 
     return (
-        <main
-            style={{
-                maxWidth: "668px",
-                padding: "10px",
-                paddingTop: "5px",
-                paddingBottom: "5px",
-                display: "",
-            }}
-            className={`${orderStatus} flex`}
-        >
+        <main className={`${orderStatus} `}>
             <header className="text-2xl font-black pb-3">
                 {status.toUpperCase()}
             </header>

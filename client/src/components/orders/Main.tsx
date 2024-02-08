@@ -20,7 +20,7 @@ const Main = ({ orders }: IMain) => {
     }, [orders]);
 
     return (
-        <div className="h-full w-screen">
+        <div className="h-full w-screen grid grid-cols-2">
             {ordersByStatus &&
                 Object.entries(ordersByStatus).map(([status, orders]) => (
                     <AllOrders
