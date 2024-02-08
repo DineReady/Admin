@@ -27,16 +27,16 @@ const AllOrders = ({ orders, status }: IAllOrders): JSX.Element => {
     );
 
     return (
-        <main className={`${orderStatus} `}>
+        <main className={`${orderStatus} pl-10 pt-4`}>
             <header className="text-2xl font-black pb-3">
                 {status.toUpperCase()}
             </header>
-            <section className="flex items-center justify-start gap-2 flex-wrap overflow-x-auto margin-top-50px">
+            <section className="flex items-center justify-start gap-5 flex-wrap overflow-x-auto">
                 {pendingOrders.map((order: IOrder) => (
                     <Order key={order.id} status={order.status} id={order.id} />
                 ))}
             </section>
-            <section className="flex items-center justify-start gap-2 flex-wrap overflow-x-auto">
+            <section className="flex items-center justify-start gap-5 flex-wrap overflow-x-auto">
                 {completeOrders.map((order: IOrder) => (
                     <Order key={order.id} status={order.status} id={order.id} />
                 ))}

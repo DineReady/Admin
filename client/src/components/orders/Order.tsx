@@ -6,7 +6,7 @@ import { Tooltip } from "@chakra-ui/react";
 
 const Order = ({ status, id }: IOrder) => {
     return (
-        <button className="min-h-30 min-w-96 max-h-30 max-w-96 bg-white flex flex-col p-5 rounded-xl items-start">
+        <button className="min-h-30 min-w-80  max-h-30 max-w-80 bg-white flex flex-col p-5 rounded-xl items-start">
             <div className="text-2xl font-black">ID: {id}</div>
             <div className="text-2xl font-black">
                 STATUS: {status.toUpperCase()}
