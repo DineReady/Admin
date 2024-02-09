@@ -20,14 +20,14 @@ export default async function createOrder(req: Request, res: Response): Promise<
                 isUnique = !existingOrderIds.includes(uniqueId);
             }
 
-            db.run("INSERT INTO orders (id, status) VALUES (?, ?)", [uniqueId, "pending"], (err: Error | null) => {
-                if (err) {
-                    console.error(err.message);
-                    return res.status(500).send(err);
-                }
-                console.log(`[server] Order with ID ${uniqueId} added`);
-                res.status(200).json({ uniqueId });
-            });
+            // db.run("INSERT INTO orders (id, status) VALUES (?, ?)", [uniqueId, "pending"], (err: Error | null) => {
+            //     if (err) {
+            //         console.error(err.message);
+            //         return res.status(500).send(err);
+            //     }
+            //     console.log(`[server] Order with ID ${uniqueId} added`);
+            //     res.status(200).json({ uniqueId });
+            // });
         });
     } catch (error: unknown) {
         console.error((error as Error).message);

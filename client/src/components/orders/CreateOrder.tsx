@@ -1,6 +1,6 @@
 import { Plus } from "lucide-react";
 import React, { useEffect, useState } from "react";
-import QRCode from "react-qr-code";
+// import QRCode from "react-qr-code";
 import { useToast } from "@chakra-ui/react";
 import "../../globals.css";
 // import { createOrder } from "../../lib";
@@ -8,7 +8,8 @@ import axios, { AxiosResponse } from "axios";
 
 const CreateOrder = () => {
     const [loading, setLoading] = useState<boolean>(false);
-    const toast = useToast(); // Declare toast here
+    const [orderId, setOrderId] = useState<string>("");
+    const toast = useToast();
 
     useEffect(() => {
         if (loading) {
@@ -22,7 +23,7 @@ const CreateOrder = () => {
         }
     }, [loading]);
 
-    async function createOrder() {
+    async function createOrder(): Promise<void> {
         const ENDPOINT = "http://localhost:8080/orders/create";
         let orderId: string;
 
@@ -41,7 +42,8 @@ const CreateOrder = () => {
                 position: "bottom-right",
             });
 
-            return orderId;
+            setOrderId(orderId);
+            console.log(`[client] Order created with ID ${orderId}`);
         } catch (error: unknown) {
             toast({
                 title: `Error (${error})`,
