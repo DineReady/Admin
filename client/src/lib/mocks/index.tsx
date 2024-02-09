@@ -6,42 +6,22 @@ import React from "react";
 export const options = [
     {
         value: OrderStatus.Declined,
-        icon: (
-            <Trash2
-                size={25}
-                className="hover:text-red-500 duration-300 transition ease-in-out"
-            />
-        ),
+        icon: <Trash2 size={25} className="hover:text-red-500 duration-300 transition ease-in-out" />,
         color: "text-red-500",
     },
     {
         value: OrderStatus.Pending,
-        icon: (
-            <ChefHat
-                size={25}
-                className="hover:text-orange-500 duration-300 transition ease-in-out"
-            />
-        ),
+        icon: <ChefHat size={25} className="hover:text-orange-500 duration-300 transition ease-in-out" />,
         color: "text-orange-500",
     },
     {
         value: OrderStatus.Complete,
-        icon: (
-            <Check
-                size={25}
-                className="hover:text-green-500 duration-300 transition ease-in-out"
-            />
-        ),
+        icon: <Check size={25} className="hover:text-green-500 duration-300 transition ease-in-out" />,
         color: "text-green-500",
     },
     {
         value: OrderStatus.Taken,
-        icon: (
-            <Cookie
-                size={25}
-                className="hover:text-emerald-500 duration-300 transition ease-in-out"
-            />
-        ),
+        icon: <Cookie size={25} className="hover:text-emerald-500 duration-300 transition ease-in-out" />,
         color: "text-emerald-500",
     },
 ];

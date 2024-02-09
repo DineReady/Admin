@@ -6,13 +6,11 @@ export default async function createOrder(req: Request, res: Response): Promise<
     let uniqueId: string = uuidv4();
 
     try {
-        const all_id_orders_query: string = "SELECT id FROM orders";
-        db.all(all_id_orders_query, async (err: Error | null, rows: { id: string }[]) => {
-            if (err) {
-                throw err;
-            }
+        db.all("SELECT id FROM orders", async (err: Error | null, rows: { id: string }[]) => {
+            if (err) throw err;
+
             const existingOrderIds: string[] = rows.map((row: { id: string }) => row.id);
-            let isUnique = !existingOrderIds.includes(uniqueId);
+            let isUnique: boolean = !existingOrderIds.includes(uniqueId);
 
             while (!isUnique) {
                 uniqueId = uuidv4();
@@ -20,9 +18,10 @@ export default async function createOrder(req: Request, res: Response): Promise<
             }
 
             db.run("INSERT INTO orders (id, status) VALUES (?, ?)", [uniqueId, "pending"], (err: Error | null) => {
-                if (err) throw `Error inserting order: ${err.message}`;
+                if (err) throw `[server] Error inserting order: ${err.message}`;
                 console.log(`[server] Order with ID ${uniqueId} inserted`);
             });
+
             res.status(200).json({ uniqueId });
         });
     } catch (error: unknown) {

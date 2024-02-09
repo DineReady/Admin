@@ -23,11 +23,7 @@ const Main = ({ orders }: IMain) => {
         <div className="h-full w-screen">
             {ordersByStatus &&
                 Object.entries(ordersByStatus).map(([status, orders]) => (
-                    <AllOrders
-                        key={status}
-                        orders={orders}
-                        status={status as OrderStatus}
-                    />
+                    <AllOrders key={status} orders={orders} status={status as OrderStatus} />
                 ))}
         </div>
     );

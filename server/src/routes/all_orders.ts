@@ -9,7 +9,7 @@ export default async function allOrders(req: Request, res: Response): Promise<vo
                 console.error(err.message);
                 res.status(500).send("Server error");
             }
-            res.json(rows);
+            res.status(200).json(rows);
             console.log(`[server] Orders: ${JSON.stringify(rows)}`);
         });
     } catch (error: unknown) {

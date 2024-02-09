@@ -4,6 +4,7 @@ import QRCode from "react-qr-code";
 import { useToast } from "@chakra-ui/react";
 import "../../globals.css";
 import axios, { AxiosResponse } from "axios";
+import clipboardCopy from "clipboard-copy";
 
 const CreateOrder = () => {
     const [loading, setLoading] = useState<boolean>(false);
@@ -29,16 +30,11 @@ const CreateOrder = () => {
         try {
             setLoading(true);
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            const response: AxiosResponse<any, string> =
-                await axios.get(ENDPOINT);
+            const response: AxiosResponse<any, string> = await axios.get(ENDPOINT);
             orderId = response.data;
 
             toast({
-                title: `Order created (${
-                    orderId.uniqueId.slice(0, 5) +
-                    "..." +
-                    orderId.uniqueId.slice(-5)
-                })`,
+                title: `Order created (${orderId.uniqueId.slice(0, 5) + "..." + orderId.uniqueId.slice(-5)})`,
                 description: "Order created successfully",
                 status: "success",
                 duration: 2000,
@@ -73,16 +69,23 @@ const CreateOrder = () => {
                 <section className="flex flex-col fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-3 rounded-xl shadow-lg">
                     <QRCode
                         value={`https://user-flax-alpha.vercel.app/${orderId}`}
-                        className="w-full"
+                        className="w-full h-auto"
                     />
                     <p className="text-center text-black mt-4 text-sm">
                         Your order ID is:{" "}
                         <button
                             onClick={() => {
-                                //TODO: Copy to clipboard
+                                clipboardCopy(orderId);
+                                toast({
+                                    title: "Copied to clipboard",
+                                    description: "Order ID copied to clipboard",
+                                    status: "success",
+                                    duration: 1000,
+                                    position: "bottom-right",
+                                });
                             }}
                         >
-                            {orderId}
+                            <b>{orderId}</b>
                         </button>
                     </p>
                     <div className="flex items-center justify-between"></div>
