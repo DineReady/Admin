@@ -27,7 +27,7 @@ export default function App(): JSX.Element {
 
     return (
         <>
-            <Header orders={mock.length} />
+            <Header orders={orders?.length || mock.length} />
             <Main orders={orders || mock} />
             <CreateOrder />
         </>
