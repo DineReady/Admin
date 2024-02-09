@@ -1,9 +1,8 @@
 import { Plus } from "lucide-react";
 import React, { useEffect, useState } from "react";
-// import QRCode from "react-qr-code";
+import QRCode from "react-qr-code";
 import { useToast } from "@chakra-ui/react";
 import "../../globals.css";
-// import { createOrder } from "../../lib";
 import axios, { AxiosResponse } from "axios";
 
 const CreateOrder = () => {
@@ -25,7 +24,7 @@ const CreateOrder = () => {
 
     async function createOrder(): Promise<void> {
         const ENDPOINT = "http://localhost:8080/orders/create";
-        let orderId: string;
+        let orderId: { uniqueId: string } = { uniqueId: "" };
 
         try {
             setLoading(true);
@@ -35,15 +34,18 @@ const CreateOrder = () => {
             orderId = response.data;
 
             toast({
-                title: `Order created (${orderId})`,
+                title: `Order created (${
+                    orderId.uniqueId.slice(0, 5) +
+                    "..." +
+                    orderId.uniqueId.slice(-5)
+                })`,
                 description: "Order created successfully",
                 status: "success",
                 duration: 2000,
                 position: "bottom-right",
             });
 
-            setOrderId(orderId);
-            console.log(`[client] Order created with ID ${orderId}`);
+            setOrderId(orderId.uniqueId);
         } catch (error: unknown) {
             toast({
                 title: `Error (${error})`,
@@ -58,14 +60,41 @@ const CreateOrder = () => {
     }
 
     return (
-        <button
-            className="create-order-btn"
-            onClick={async () => {
-                await createOrder();
-            }}
-        >
-            <Plus size={30} />
-        </button>
+        <>
+            <button
+                className="create-order-btn"
+                onClick={async () => {
+                    await createOrder();
+                }}
+            >
+                <Plus size={30} />
+            </button>
+            {orderId && (
+                <section className="flex flex-col fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-3 rounded-xl shadow-lg">
+                    <QRCode
+                        value={`https://user-flax-alpha.vercel.app/${orderId}`}
+                        className="w-full"
+                    />
+                    <p className="text-center text-black mt-4 text-sm">
+                        Your order ID is:{" "}
+                        <button
+                            onClick={() => {
+                                //TODO: Copy to clipboard
+                            }}
+                        >
+                            {orderId}
+                        </button>
+                    </p>
+                    <div className="flex items-center justify-between"></div>
+                    <button
+                        className="mt-5 px-2 py-1 bg-blue-400 rounded-lg text-white w-full text-lg font-semibold"
+                        onClick={() => setOrderId("")}
+                    >
+                        Done
+                    </button>
+                </section>
+            )}
+        </>
     );
 };
 
