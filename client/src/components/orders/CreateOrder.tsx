@@ -3,11 +3,12 @@ import React, { useEffect, useState } from "react";
 import QRCode from "react-qr-code";
 import { useToast } from "@chakra-ui/react";
 import "../../globals.css";
-import { createOrder } from "../../lib";
+// import { createOrder } from "../../lib";
+import axios, { AxiosResponse } from "axios";
 
 const CreateOrder = () => {
     const [loading, setLoading] = useState<boolean>(false);
-    const toast = useToast();
+    const toast = useToast(); // Declare toast here
 
     useEffect(() => {
         if (loading) {
@@ -19,15 +20,46 @@ const CreateOrder = () => {
                 duration: 2000,
             });
         }
-    }, [loading as true]);
+    }, [loading]);
+
+    async function createOrder() {
+        const ENDPOINT = "http://localhost:8080/orders/create";
+        let orderId: string;
+
+        try {
+            setLoading(true);
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            const response: AxiosResponse<any, string> =
+                await axios.get(ENDPOINT);
+            orderId = response.data;
+
+            toast({
+                title: `Order created (${orderId})`,
+                description: "Order created successfully",
+                status: "success",
+                duration: 2000,
+                position: "bottom-right",
+            });
+
+            return orderId;
+        } catch (error: unknown) {
+            toast({
+                title: `Error (${error})`,
+                description: "There was an error creating the order",
+                status: "error",
+                duration: 2000,
+                position: "bottom-right",
+            });
+        } finally {
+            setLoading(false);
+        }
+    }
 
     return (
         <button
-            // TODO: fix the err: Invalid hook call. Hooks can only be called inside of the body of a function component.
             className="create-order-btn"
-            onClick={() => {
-                setLoading(true);
-                createOrder().then(() => setLoading(false));
+            onClick={async () => {
+                await createOrder();
             }}
         >
             <Plus size={30} />

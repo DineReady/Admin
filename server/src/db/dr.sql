@@ -1,0 +1,1 @@
+INSERT INTO orders (id, status) VALUES (1, 'pending');

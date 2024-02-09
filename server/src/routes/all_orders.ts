@@ -10,14 +10,10 @@ export default async function allOrders(req: Request, res: Response): Promise<vo
                 res.status(500).send("Server error");
             }
             res.json(rows);
+            console.log(`[server] Orders: ${JSON.stringify(rows)}`);
         });
     } catch (error: unknown) {
         console.error((error as Error).message);
         res.status(500).send("Server error");
-    } finally {
-        db.close((err: Error | null) => {
-            if (err) console.error(err.message);
-            console.log("[server] Database connection closed");
-        });
     }
 }

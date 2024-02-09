@@ -3,7 +3,7 @@ import express, { Express, Request, Response } from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
 import dotenv from "dotenv";
-import { allOrders, allOrdersId } from "./routes";
+import { allOrders, createOrder } from "./routes";
 import { db, sql } from "./db";
 
 dotenv.config();
@@ -27,6 +27,6 @@ app.use(express.json());
     /* ============================= ROUTES ============================= */
 }
 app.get("/orders", (req: Request, res: Response) => allOrders(req, res));
-app.get("/orders/id", (req: Request, res: Response) => allOrdersId(req, res));
+app.get("/orders/create", (req: Request, res: Response) => createOrder(req, res));
 
 app.listen(PORT, (): void => console.log(`\n[server] Server is running at http://localhost:${PORT}`));
