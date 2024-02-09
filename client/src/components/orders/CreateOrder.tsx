@@ -1,15 +1,20 @@
 import { Plus } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import QRCode from "react-qr-code";
 import { useToast } from "@chakra-ui/react";
 import "../../globals.css";
 import axios, { AxiosResponse } from "axios";
 import clipboardCopy from "clipboard-copy";
+import { AppContext } from "../../context";
 
 const CreateOrder = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const [orderId, setOrderId] = useState<string>("");
     const toast = useToast();
+    const { createdOrder, setCreatedOrder } = useContext(AppContext) as {
+        createdOrder: boolean;
+        setCreatedOrder: React.Dispatch<React.SetStateAction<boolean>>;
+    };
 
     useEffect(() => {
         if (loading) {
@@ -41,6 +46,7 @@ const CreateOrder = () => {
                 position: "bottom-right",
             });
 
+            setCreatedOrder(true);
             setOrderId(orderId.uniqueId);
         } catch (error: unknown) {
             toast({

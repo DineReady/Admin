@@ -1,16 +1,16 @@
 import React from "react";
 import { IOrder } from "../../types";
-import { options } from "../../lib/mocks";
-import clsx from "clsx";
-import { Tooltip } from "@chakra-ui/react";
+// import clsx from "clsx";
+// import { Tooltip } from "@chakra-ui/react";
 
 const Order = ({ status, id }: IOrder) => {
+    // TODO: @Gniewkoss - Add options
     return (
         <button className="min-h-30 min-w-96 max-h-30 max-w-96 bg-white flex flex-col p-5 rounded-xl items-start">
-            <div className="text-2xl font-black">ID: {id}</div>
             <div className="text-2xl font-black">STATUS: {status.toUpperCase()}</div>
+            <div className="text-sm font-black">ID: {id}</div>
             <section className="w-full flex items-center justify-end pt-2 gap-x-2">
-                {options.map((option) => (
+                {/* {options.map((option) => (
                     <Tooltip
                         hasArrow
                         label={option.value.toUpperCase()}
@@ -39,7 +39,7 @@ const Order = ({ status, id }: IOrder) => {
                             </button>
                         </div>
                     </Tooltip>
-                ))}
+                ))} */}
             </section>
         </button>
     );

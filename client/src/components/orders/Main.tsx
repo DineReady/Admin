@@ -8,7 +8,7 @@ const Main = ({ orders }: IMain) => {
     }>();
 
     useEffect(() => {
-        const groupedOrders = orders.reduce(
+        const groupedOrders = orders?.reduce(
             (acc, order) => {
                 acc[order.status] = [...(acc[order.status] || []), order];
                 return acc;
