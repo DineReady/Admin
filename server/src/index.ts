@@ -1,18 +1,26 @@
 /* eslint-disable quotes */
-import express, { Express, Request, Response } from "express";
-import cors from "cors";
 import bodyParser from "body-parser";
+import cors from "cors";
 import dotenv from "dotenv";
+import express, { Express, Request, Response } from "express";
 import { allOrders, createOrder } from "./routes";
-import { db, sql } from "./db";
+import { db } from "./connection";
 
 dotenv.config();
 const app: Express = express();
 const PORT: number = 8080;
 
-db.run(sql, (err: Error | null): void => {
-    if (err) console.error(err.message);
-    console.log('[server] Table "orders" exists or was created successfully');
+db.schema.hasTable("orders").then((exists: boolean) => {
+    if (!exists) {
+        db.schema
+            .createTable("orders", (table) => {
+                table.string("id").notNullable().primary();
+                table.string("status").notNullable();
+                table.timestamps(true, true);
+            })
+            .then(() => console.log("[server] Created table: orders"))
+            .catch((error: Error) => console.error(`[server] Error creating table: ${error.message}`));
+    }
 });
 
 {
