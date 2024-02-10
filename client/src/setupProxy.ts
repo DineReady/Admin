@@ -3,7 +3,7 @@ import { Express } from "express";
 
 export default function (app: Express) {
     app.use(
-        ["/orders"],
+        ["/orders", "/orders/create"],
         createProxyMiddleware({
             target: "http://localhost:8080",
             changeOrigin: true,

@@ -1,5 +1,5 @@
 export interface IHeader {
-    orders: number;
+    orders: number | undefined;
 }
 
 export interface IOrder {
@@ -8,7 +8,7 @@ export interface IOrder {
 }
 
 export interface IMain {
-    orders: IOrder[];
+    orders: IOrder[] | undefined;
 }
 export interface IAllOrders {
     orders: IOrder[];
