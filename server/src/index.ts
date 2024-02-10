@@ -3,7 +3,7 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import dotenv from "dotenv";
 import express, { Express, Request, Response } from "express";
-import { allOrders, createOrder, validateOrderId } from "./routes";
+import { allOrders, createOrder, orderDetails, validateOrderId } from "./routes";
 import { db } from "./connection";
 import { Knex } from "knex";
 
@@ -38,5 +38,6 @@ app.use(express.json());
 app.get("/orders", (req: Request, res: Response): Promise<void> => allOrders(req, res));
 app.get("/orders/create", (req: Request, res: Response): Promise<void> => createOrder(req, res));
 app.get("/orders/validate/:id", (req: Request, res: Response): Promise<void> => validateOrderId(req, res));
+app.get("/orders/:id", (req: Request, res: Response): Promise<void> => orderDetails(req, res));
 
 app.listen(PORT, (): void => console.log(`\n[server] Server is running at http://localhost:${PORT}`));
