@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from "react";
-import "./index.css";
 import { CreateOrder, Header, Main } from "./components";
-import { IOrder } from "./types";
 import { AppContext, AppContextProvider } from "./context";
+import "./index.css";
+import { IOrder } from "./types";
 
 export default function App(): JSX.Element {
     const [orders, setOrders] = useState<IOrder[]>();

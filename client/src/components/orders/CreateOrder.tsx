@@ -6,6 +6,7 @@ import "../../globals.css";
 import axios, { AxiosResponse } from "axios";
 import clipboardCopy from "clipboard-copy";
 import { AppContext } from "../../context";
+import { CLIENT_DOMAIN } from "../../lib";
 
 const CreateOrder = () => {
     const [loading, setLoading] = useState<boolean>(false);
@@ -73,10 +74,7 @@ const CreateOrder = () => {
             </button>
             {orderId && (
                 <section className="flex flex-col fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-3 rounded-xl shadow-lg">
-                    <QRCode
-                        value={`https://user-flax-alpha.vercel.app/${orderId}`}
-                        className="w-full h-auto"
-                    />
+                    <QRCode value={`${CLIENT_DOMAIN}${orderId}`} className="w-full h-auto" />
                     <p className="text-center text-black mt-4 text-sm">
                         Your order ID is:{" "}
                         <button
