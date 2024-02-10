@@ -1,12 +1,15 @@
 import { Request, Response } from "express";
 import { v4 as uuidv4 } from "uuid";
 import { db } from "../connection";
+import { Order } from "../../types";
 
 export default async function createOrder(req: Request, res: Response): Promise<void> {
     let uniqueId: string = uuidv4();
 
     try {
-        const existingOrderIds: string[] = await db("orders").select("id");
+        const existingOrderIds: string[] = await db("orders")
+            .select("id")
+            .then((orders: Order[]): string[] => orders.map((order: Order) => order.id));
         let isUnique: boolean = !existingOrderIds.includes(uniqueId);
         while (!isUnique) {
             uniqueId = uuidv4();
