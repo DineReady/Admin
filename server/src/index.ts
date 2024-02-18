@@ -1,42 +1,43 @@
 /* eslint-disable quotes */
-import express, { Express, Request, Response } from "express";
-import sqlite, { Database } from "sqlite3";
-import cors from "cors";
 import bodyParser from "body-parser";
+import cors from "cors";
 import dotenv from "dotenv";
-import path from "path";
-import { sql } from "./db/temp_queries";
-import { allOrders } from "./routes";
+import express, { Express, Request, Response } from "express";
+import { allOrders, createOrder, orderDetails, validateOrderId } from "./routes";
+import { db } from "./connection";
+import { Knex } from "knex";
 
 dotenv.config();
-sqlite.verbose();
-
-const db_file_name: string = "dine_ready.db";
-const db_dir_name: string = "db";
 const app: Express = express();
 const PORT: number = 8080;
-const db_path: string = path.resolve(__dirname, db_dir_name, db_file_name);
-const db: Database = new sqlite.Database(
-    db_path,
-    sqlite.OPEN_READWRITE,
-    (err: Error | null): void => {
-        if (err) console.error(err.message);
-        console.log(`[server] Connected to the ${db_file_name}`);
-    },
-);
 
-db.run(sql, (err: Error | null): void => {
-    if (err) console.error(err.message);
-    console.log('[server] Table "orders" exists or was created successfully');
+db.schema.hasTable("orders").then((exists: boolean) => {
+    if (!exists) {
+        db.schema
+            .createTable("orders", (table: Knex.CreateTableBuilder) => {
+                table.string("id").notNullable().primary();
+                table.string("status").notNullable();
+                table.timestamps(true, true);
+            })
+            .then((): void => console.log("[server] Created table: orders"))
+            .catch((error: Error) => console.error(`[server] Error creating table: ${error.message}`));
+    }
 });
 
+{
+    /* ============================= MIDDLEWARE ========================== */
+}
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.json());
 
-app.get("/orders", (req: Request, res: Response) => allOrders(req, res, db));
+{
+    /* ============================= ROUTES ============================= */
+}
+app.get("/orders", (req: Request, res: Response): Promise<void> => allOrders(req, res));
+app.get("/orders/create", (req: Request, res: Response): Promise<void> => createOrder(req, res));
+app.get("/orders/validate/:id", (req: Request, res: Response): Promise<void> => validateOrderId(req, res));
+app.get("/orders/:id", (req: Request, res: Response): Promise<void> => orderDetails(req, res));
 
-app.listen(PORT, (): void =>
-    console.log(`[server] Server is running at http://localhost:${PORT}`),
-);
+app.listen(PORT, (): void => console.log(`\n[server] Server is running at http://localhost:${PORT}`));

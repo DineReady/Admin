@@ -27,6 +27,10 @@ const AllOrders = ({ orders, status }: IAllOrders): JSX.Element => {
     );
 
     return (
+        <main className={`${orderStatus} px-10 py-5`}>
+            <header className="text-2xl font-black pb-3">{status.toUpperCase()}</header>
+            <section className="flex w-full items-center justify-start gap-2 flex-wrap overflow-x-auto">
+                {orders.map((order: IOrder) => (
         <main className={`${orderStatus} pl-10 pt-4`}>
             <header className="text-2xl font-black pb-3">
                 {status.toUpperCase()}

@@ -1,7 +1,6 @@
 # dr
 
 ### TODO
-- [ ] Proxy in FE doesnt work
 - [ ] Creating orders in FE
 - [ ] Fetching orders to FE
 - [ ] Set order status by click in FE

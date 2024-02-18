@@ -1,26 +1,12 @@
 import { Request, Response } from "express";
-import { Database, Statement } from "sqlite3";
+import { db } from "../connection";
+import { Order } from "../../types";
 
-export default async function allOrders(
-    req: Request,
-    res: Response,
-    db: Database,
-): Promise<void> {
+export default async function allOrders(req: Request, res: Response): Promise<void> {
     try {
-        db.all("SELECT * FROM orders", (err: Error | null, rows: Statement) => {
-            if (err) {
-                console.error(err.message);
-                res.status(500).send("Server error");
-            }
-            res.json(rows);
-        });
+        res.status(200).json(await db("orders").select("*") as Order[]);
     } catch (error: unknown) {
         console.error((error as Error).message);
         res.status(500).send("Server error");
-    } finally {
-        db.close((err: Error | null) => {
-            if (err) console.error(err.message);
-            console.log("[server] Database connection closed");
-        });
     }
 }
