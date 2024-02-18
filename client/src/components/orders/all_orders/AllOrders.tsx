@@ -7,11 +7,8 @@ import Order from "../Order";
 const AllOrders = ({ orders, status }: IAllOrders): JSX.Element => {
     const [orderStatus, setOrderStatus] = useState<OrderStatusColor>();
 
-    useEffect(() => {
+    useEffect((): void => {
         switch (status) {
-            case "active":
-                setOrderStatus(OrderStatusColor.Active);
-                break;
             case "pending":
                 setOrderStatus(OrderStatusColor.Pending);
                 break;
@@ -19,18 +16,20 @@ const AllOrders = ({ orders, status }: IAllOrders): JSX.Element => {
                 setOrderStatus(OrderStatusColor.Complete);
                 break;
             default:
-                setOrderStatus(OrderStatusColor.Active);
+                setOrderStatus(OrderStatusColor.Pending);
                 break;
         }
     }, [status]);
 
     return (
-        <main className={`${orderStatus} px-10 py-5`}>
+        <main className={`${orderStatus} h-full px-10 py-5`}>
             <header className="text-2xl font-black pb-3">{status.toUpperCase()}</header>
             <section className="flex w-full items-center justify-start gap-2 flex-wrap overflow-x-auto">
-                {orders.map((order: IOrder) => (
-                    <Order key={order.id} status={order.status} id={order.id} />
-                ))}
+                {orders.map(
+                    (order: IOrder): JSX.Element => (
+                        <Order key={order.id} status={order.status} id={order.id} />
+                    ),
+                )}
             </section>
         </main>
     );
