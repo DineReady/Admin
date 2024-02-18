@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { IMain, IOrder, OrderStatus } from "../../types";
 import AllOrders from "./all_orders/AllOrders";
 
-const Main = ({ orders }: IMain) => {
+const Main = ({ orders }: IMain): JSX.Element => {
     const [ordersByStatus, setOrdersByStatus] = useState<{
         [key in OrderStatus]: IOrder[];
     }>();
@@ -22,9 +22,11 @@ const Main = ({ orders }: IMain) => {
     return (
         <div className="h-full w-screen grid grid-cols-2">
             {ordersByStatus &&
-                Object.entries(ordersByStatus).map(([status, orders]) => (
-                    <AllOrders key={status} orders={orders} status={status as OrderStatus} />
-                ))}
+                Object.entries(ordersByStatus).map(
+                    ([status, orders]): JSX.Element => (
+                        <AllOrders key={status} orders={orders} status={status as OrderStatus} />
+                    ),
+                )}
         </div>
     );
 };

@@ -7,7 +7,7 @@ import Order from "../Order";
 const AllOrders = ({ orders, status }: IAllOrders): JSX.Element => {
     const [orderStatus, setOrderStatus] = useState<OrderStatusColor>();
 
-    useEffect(() => {
+    useEffect((): void => {
         switch (status) {
             case "pending":
                 setOrderStatus(OrderStatusColor.Pending);
@@ -21,29 +21,15 @@ const AllOrders = ({ orders, status }: IAllOrders): JSX.Element => {
         }
     }, [status]);
 
-    const pendingOrders = orders.filter((order) => order.status === "pending");
-    const completeOrders = orders.filter(
-        (order) => order.status === "complete",
-    );
-
     return (
-        <main className={`${orderStatus} px-10 py-5`}>
+        <main className={`${orderStatus} h-full px-10 py-5`}>
             <header className="text-2xl font-black pb-3">{status.toUpperCase()}</header>
             <section className="flex w-full items-center justify-start gap-2 flex-wrap overflow-x-auto">
-                {orders.map((order: IOrder) => (
-        <main className={`${orderStatus} pl-10 pt-4`}>
-            <header className="text-2xl font-black pb-3">
-                {status.toUpperCase()}
-            </header>
-            <section className="flex items-center justify-start gap-5 flex-wrap overflow-x-auto">
-                {pendingOrders.map((order: IOrder) => (
-                    <Order key={order.id} status={order.status} id={order.id} />
-                ))}
-            </section>
-            <section className="flex items-center justify-start gap-5 flex-wrap overflow-x-auto">
-                {completeOrders.map((order: IOrder) => (
-                    <Order key={order.id} status={order.status} id={order.id} />
-                ))}
+                {orders.map(
+                    (order: IOrder): JSX.Element => (
+                        <Order key={order.id} status={order.status} id={order.id} />
+                    ),
+                )}
             </section>
         </main>
     );
