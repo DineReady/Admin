@@ -20,7 +20,6 @@ const Order = ({ status, id }: IOrder): JSX.Element => {
     const onOpen = (): void => setIsOpen(true);
     const toast = useToast();
 
-    // TODO: @Gniewkoss - Add options
     return (
         <>
             <button
@@ -29,39 +28,8 @@ const Order = ({ status, id }: IOrder): JSX.Element => {
             >
                 <div className="text-2xl font-black">STATUS: {status.toUpperCase()}</div>
                 <div className="text-sm font-black">ID: {id}</div>
-                <section className="w-full flex items-center justify-end pt-2 gap-x-2">
-                    {/* {options.map((option) => (
-                    <Tooltip
-                        hasArrow
-                        label={option.value.toUpperCase()}
-                        bg="gray.300"
-                        color="black"
-                        key={option.value}
-                    >
-                        <div
-                            className={`text-2xl font-black text-zinc-400 hover:${option.color} ${
-                                status === option.value ? "opacity-50 cursor-not-allowed" : "cursor-pointer"
-                            }`}
-                        >
-                            <button
-                                className={clsx(
-                                    "",
-                                    status === option.value
-                                        ? "opacity-50 cursor-not-allowed"
-                                        : "cursor-pointer",
-                                )}
-                                disabled={status === option.value}
-                                onClick={() => {
-                                    console.log(status, id);
-                                }}
-                            >
-                                {option.icon}
-                            </button>
-                        </div>
-                    </Tooltip>
-                ))} */}
-                </section>
             </button>
+            {/* TODO: Make this modale to seperate file */}
             <Modal isOpen={isOpen} onClose={onClose}>
                 <ModalOverlay />
                 <ModalContent>

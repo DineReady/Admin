@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { IMain, IOrder, OrderStatus } from "../../types";
 import AllOrders from "./all_orders/AllOrders";
+import { DndContext } from "@dnd-kit/core";
 
 const Main = ({ orders }: IMain): JSX.Element => {
     const [ordersByStatus, setOrdersByStatus] = useState<{
@@ -24,7 +25,9 @@ const Main = ({ orders }: IMain): JSX.Element => {
             {ordersByStatus &&
                 Object.entries(ordersByStatus).map(
                     ([status, orders]): JSX.Element => (
-                        <AllOrders key={status} orders={orders} status={status as OrderStatus} />
+                        <DndContext key={status}>
+                            <AllOrders orders={orders} status={status as OrderStatus} />
+                        </DndContext>
                     ),
                 )}
         </div>
