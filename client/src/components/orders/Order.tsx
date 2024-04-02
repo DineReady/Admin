@@ -13,6 +13,7 @@ import {
 import QRCode from "react-qr-code";
 import clipboardCopy from "clipboard-copy";
 import { CLIENT_DOMAIN } from "../../lib";
+import clsx from "clsx";
 
 const Order = ({ status, id }: IOrder): JSX.Element => {
     const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -20,47 +21,22 @@ const Order = ({ status, id }: IOrder): JSX.Element => {
     const onOpen = (): void => setIsOpen(true);
     const toast = useToast();
 
-    // TODO: @Gniewkoss - Add options
     return (
-        <>
+        <div>
             <button
                 onClick={() => onOpen()}
-                className="min-h-30 min-w-96 max-h-30 max-w-96 bg-white flex flex-col p-5 rounded-xl items-start"
+                className={clsx(
+                    "min-h-30 min-w-96 max-h-30 max-w-96 flex flex-col p-5 rounded-xl items-start",
+                    {
+                        "bg-green-100": status === "complete",
+                        "bg-yellow-100": status === "pending",
+                        "bg-red-100": status === "declined",
+                        "bg-blue-100": status === "taken",
+                    },
+                )}
             >
                 <div className="text-2xl font-black">STATUS: {status.toUpperCase()}</div>
                 <div className="text-sm font-black">ID: {id}</div>
-                <section className="w-full flex items-center justify-end pt-2 gap-x-2">
-                    {/* {options.map((option) => (
-                    <Tooltip
-                        hasArrow
-                        label={option.value.toUpperCase()}
-                        bg="gray.300"
-                        color="black"
-                        key={option.value}
-                    >
-                        <div
-                            className={`text-2xl font-black text-zinc-400 hover:${option.color} ${
-                                status === option.value ? "opacity-50 cursor-not-allowed" : "cursor-pointer"
-                            }`}
-                        >
-                            <button
-                                className={clsx(
-                                    "",
-                                    status === option.value
-                                        ? "opacity-50 cursor-not-allowed"
-                                        : "cursor-pointer",
-                                )}
-                                disabled={status === option.value}
-                                onClick={() => {
-                                    console.log(status, id);
-                                }}
-                            >
-                                {option.icon}
-                            </button>
-                        </div>
-                    </Tooltip>
-                ))} */}
-                </section>
             </button>
             <Modal isOpen={isOpen} onClose={onClose}>
                 <ModalOverlay />
@@ -94,7 +70,7 @@ const Order = ({ status, id }: IOrder): JSX.Element => {
                     </ModalFooter>
                 </ModalContent>
             </Modal>
-        </>
+        </div>
     );
 };
 

@@ -17,7 +17,6 @@ export default async function createOrder(req: Request, res: Response): Promise<
         }
 
         await db("orders").insert({ id: uniqueId, status: "pending" });
-        console.log(`[server] Order with ID ${uniqueId} inserted`);
         res.status(200).json({ uniqueId });
     } catch (error: unknown) {
         console.error((error as Error).message);
