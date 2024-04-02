@@ -1,12 +1,5 @@
 # dr
 
-### TODO
-- [ ] Creating orders in FE
-- [ ] Fetching orders to FE
-- [ ] Set order status by click in FE
-
-
-
 jak macie jakies dziwne errory wszedzie np eslint... to zrobcie
 ```bash
 npm run fmt

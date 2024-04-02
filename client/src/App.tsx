@@ -3,6 +3,7 @@ import { CreateOrder, Header, Main } from "./components";
 import { AppContext, AppContextProvider } from "./context";
 import "./index.css";
 import { IOrder } from "./types";
+import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/clerk-react";
 
 export default function App(): JSX.Element {
     const [orders, setOrders] = useState<IOrder[]>();
@@ -29,6 +30,12 @@ export default function App(): JSX.Element {
             <Header orders={orders?.length} />
             <Main orders={orders} />
             <CreateOrder />
+            <SignedOut>
+                <SignInButton />
+            </SignedOut>
+            <SignedIn>
+                <UserButton afterSignOutUrl="/" />
+            </SignedIn>
         </AppContextProvider>
     );
 }

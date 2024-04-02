@@ -5,6 +5,7 @@
     "private": true,
     "dependencies": {
         "@chakra-ui/react": "^2.8.2",
+        "@clerk/clerk-react": "^4.30.8",
         "@emotion/react": "^11.11.3",
         "@emotion/styled": "^11.11.0",
         "@testing-library/jest-dom": "^5.17.0",
@@ -55,6 +56,7 @@
         ]
     },
     "devDependencies": {
+        "@types/dotenv": "^8.2.0",
         "@types/react-copy-to-clipboard": "^5.0.7",
         "axios": "^1.6.7",
         "clipboard-copy": "^4.0.1",
