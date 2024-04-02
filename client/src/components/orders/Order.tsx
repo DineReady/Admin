@@ -13,6 +13,7 @@ import {
 import QRCode from "react-qr-code";
 import clipboardCopy from "clipboard-copy";
 import { CLIENT_DOMAIN } from "../../lib";
+import clsx from "clsx";
 
 const Order = ({ status, id }: IOrder): JSX.Element => {
     const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -24,12 +25,19 @@ const Order = ({ status, id }: IOrder): JSX.Element => {
         <div>
             <button
                 onClick={() => onOpen()}
-                className="min-h-30 min-w-96 max-h-30 max-w-96 bg-red-500 flex flex-col p-5 rounded-xl items-start"
+                className={clsx(
+                    "min-h-30 min-w-96 max-h-30 max-w-96 flex flex-col p-5 rounded-xl items-start",
+                    {
+                        "bg-green-100": status === "complete",
+                        "bg-yellow-100": status === "pending",
+                        "bg-red-100": status === "declined",
+                        "bg-blue-100": status === "taken",
+                    },
+                )}
             >
                 <div className="text-2xl font-black">STATUS: {status.toUpperCase()}</div>
                 <div className="text-sm font-black">ID: {id}</div>
             </button>
-            {/* TODO: Make this modale  to seperate file */}
             <Modal isOpen={isOpen} onClose={onClose}>
                 <ModalOverlay />
                 <ModalContent>

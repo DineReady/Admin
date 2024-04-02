@@ -8,7 +8,7 @@ import clipboardCopy from "clipboard-copy";
 import { AppContext } from "../../context";
 import { CLIENT_DOMAIN } from "../../lib";
 
-const CreateOrder = () => {
+const CreateOrder = (): JSX.Element => {
     const [loading, setLoading] = useState<boolean>(false);
     const [orderId, setOrderId] = useState<string>("");
     const toast = useToast();
@@ -17,7 +17,7 @@ const CreateOrder = () => {
         setCreatedOrder: React.Dispatch<React.SetStateAction<boolean>>;
     };
 
-    useEffect(() => {
+    useEffect((): void => {
         if (loading) {
             toast({
                 title: "Creating order...",

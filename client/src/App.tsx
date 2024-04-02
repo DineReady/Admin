@@ -6,23 +6,28 @@ import { IOrder } from "./types";
 
 export default function App(): JSX.Element {
     const [orders, setOrders] = useState<IOrder[]>();
+    const [loading, setLoading] = useState<boolean>(false);
     const { createdOrder, setCreatedOrder } = useContext(AppContext) as {
         createdOrder: boolean;
         setCreatedOrder: React.Dispatch<React.SetStateAction<boolean>>;
     };
 
-    useEffect(() => {
-        (async () => {
+    useEffect((): void => {
+        (async (): Promise<void> => {
             try {
-                const response = await fetch("http://localhost:8080/orders");
-                const data = await response.json();
+                setLoading(true);
+                const response: Response = await fetch("http://localhost:8080/orders");
+                const data: React.SetStateAction<IOrder[] | undefined> = await response.json();
                 setOrders(data);
                 setCreatedOrder(false);
             } catch (error: unknown) {
                 console.error((error as Error).message);
+            } finally {
+                setLoading(false);
             }
         })();
-    }, [createdOrder, setCreatedOrder]);
+    }, []);
+    // }, [createdOrder, setCreatedOrder]);
 
     return (
         <AppContextProvider>

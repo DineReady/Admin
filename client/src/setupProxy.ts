@@ -1,7 +1,7 @@
 import { createProxyMiddleware } from "http-proxy-middleware";
 import { Express } from "express";
 
-export default function (app: Express) {
+export default function (app: Express): void {
     app.use(
         ["/orders", "/orders/create", "/orders/validate/:id"],
         createProxyMiddleware({

@@ -2,15 +2,15 @@ import React, { useEffect, useState } from "react";
 import { IHeader } from "../../types";
 import { getCurrentTime } from "../../lib";
 
-const Header = ({ orders }: IHeader) => {
-    const [currTime, setCurrTime] = useState("");
+const Header = ({ orders }: IHeader): JSX.Element => {
+    const [currTime, setCurrTime] = useState<string>("");
 
-    useEffect(() => {
+    useEffect((): (() => void) => {
         const interval = setInterval(() => {
             setCurrTime(getCurrentTime());
         }, 1000);
 
-        return () => clearInterval(interval);
+        return (): void => clearInterval(interval);
     }, []);
 
     return (

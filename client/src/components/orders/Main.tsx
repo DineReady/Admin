@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import { useToast } from "@chakra-ui/react";
 import axios from "axios";
+import React, { useState } from "react";
 import { OrderStatusUpdate } from "../../types";
+import Order from "./Order";
 
 enum OrderStatus {
     Complete = "complete",
@@ -23,6 +25,7 @@ export default function Main({ orders }: IMain): JSX.Element {
     const [draggedItem, setDraggedItem] = useState<IOrder | null>(null);
     const [draggedFromList, setDraggedFromList] = useState<"pendingOrders" | "completeOrders" | null>(null);
     const POST_ORDER_STATE_UPDATE_ENDPOINT = "http://localhost:8080/orders/update-state";
+    const toast = useToast();
 
     const updateOrderState = async (order: IOrder, destination: OrderStatus): Promise<void> => {
         try {
@@ -30,8 +33,23 @@ export default function Main({ orders }: IMain): JSX.Element {
                 id: order.id,
                 destination,
             });
+
+            toast({
+                title: "Order status updated",
+                description: `Order status updated to ${destination}`,
+                status: "success",
+                duration: 2000,
+                position: "bottom-right",
+            });
         } catch (error: unknown) {
             console.error((error as Error).message);
+            toast({
+                title: "Error updating order status",
+                description: "There was an error updating the order status",
+                status: "error",
+                duration: 2000,
+                position: "bottom-right",
+            });
         }
     };
 
@@ -87,38 +105,54 @@ export default function Main({ orders }: IMain): JSX.Element {
     };
 
     return (
-        <main className="flex flex-col items-center space-y-4 min-h-screen">
-            <h1 className="mt-4 text-xl font-bold">Pending</h1>
-            <div onDragOver={handleDragOver} onDrop={(e) => handleDrop(e, "pendingOrders")}>
-                {orders
-                    ?.filter((order) => order.status === OrderStatus.Pending)
-                    .map((order) => (
-                        <div
-                            key={order.id}
-                            className="relative flex space-x-3 p-2 border rounded bg-gray-100"
-                            draggable
-                            onDragStart={() => handleDragStart(order, "pendingOrders")}
-                        >
-                            <p>{order.id}</p>
-                        </div>
-                    ))}
-            </div>
+        <main className="flex justify-between items-start h-full w-screen">
+            <section className="h-full px-10 py-5">
+                <h1 className="text-2xl font-black pb-3">Pending</h1>
+                <div
+                    onDragOver={handleDragOver}
+                    onDrop={(e) => handleDrop(e, "pendingOrders")}
+                    className="flex w-full items-center justify-start gap-2 flex-wrap overflow-x-auto"
+                >
+                    {orders
+                        ?.filter((order: IOrder): boolean => order.status === OrderStatus.Pending)
+                        .map(
+                            (order: IOrder): JSX.Element => (
+                                <div
+                                    key={order.id}
+                                    className="relative flex"
+                                    draggable
+                                    onDragStart={() => handleDragStart(order, "pendingOrders")}
+                                >
+                                    <Order status={order.status} id={order.id} />
+                                </div>
+                            ),
+                        )}
+                </div>
+            </section>
 
-            <h1 className="mt-4 text-xl font-bold">Complete</h1>
-            <div onDragOver={handleDragOver} onDrop={(e) => handleDrop(e, "completeOrders")}>
-                {orders
-                    ?.filter((order) => order.status === OrderStatus.Complete)
-                    .map((order) => (
-                        <div
-                            key={order.id}
-                            className="relative flex space-x-3 p-2 border rounded bg-gray-100"
-                            draggable
-                            onDragStart={() => handleDragStart(order, "completeOrders")}
-                        >
-                            <p>{order.id}</p>
-                        </div>
-                    ))}
-            </div>
+            <section className="h-full px-10 py-5">
+                <h1 className="text-2xl font-black pb-3">Complete</h1>
+                <div
+                    onDragOver={handleDragOver}
+                    onDrop={(e) => handleDrop(e, "completeOrders")}
+                    className="flex w-full items-center justify-start gap-2 flex-wrap overflow-x-auto"
+                >
+                    {orders
+                        ?.filter((order: IOrder): boolean => order.status === OrderStatus.Complete)
+                        .map(
+                            (order: IOrder): JSX.Element => (
+                                <div
+                                    key={order.id}
+                                    className="relative flex"
+                                    draggable
+                                    onDragStart={() => handleDragStart(order, "completeOrders")}
+                                >
+                                    <Order status={order.status} id={order.id} />
+                                </div>
+                            ),
+                        )}
+                </div>
+            </section>
         </main>
     );
 }
