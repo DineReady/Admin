@@ -39,10 +39,7 @@
         "uuid": "^9.0.1"
     },
     "dependencies": {
-<<<<<<< HEAD
-=======
         "@clerk/clerk-react": "^4.30.8",
->>>>>>> 510f485d44a343a73287539b260e01f2d3512c1c
         "sqlite3": "^5.1.7"
     }
 }

@@ -12,8 +12,7 @@ const CreateOrder = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const [orderId, setOrderId] = useState<string>("");
     const toast = useToast();
-    const { createdOrder, setCreatedOrder } = useContext(AppContext) as {
-        createdOrder: boolean;
+    const { setCreatedOrder } = useContext(AppContext) as {
         setCreatedOrder: React.Dispatch<React.SetStateAction<boolean>>;
     };
 

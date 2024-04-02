@@ -35,3 +35,8 @@ export enum OrderStatusColor {
     Declined = "bg-red-500",
     Taken = "bg-purple-500",
 }
+
+export interface OrderStatusUpdate {
+    id: IOrder["id"];
+    destination: OrderStatus;
+}
