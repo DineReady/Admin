@@ -21,15 +21,15 @@ const Order = ({ status, id }: IOrder): JSX.Element => {
     const toast = useToast();
 
     return (
-        <>
+        <div>
             <button
                 onClick={() => onOpen()}
-                className="min-h-30 min-w-96 max-h-30 max-w-96 bg-white flex flex-col p-5 rounded-xl items-start"
+                className="min-h-30 min-w-96 max-h-30 max-w-96 bg-red-500 flex flex-col p-5 rounded-xl items-start"
             >
                 <div className="text-2xl font-black">STATUS: {status.toUpperCase()}</div>
                 <div className="text-sm font-black">ID: {id}</div>
             </button>
-            {/* TODO: Make this modale to seperate file */}
+            {/* TODO: Make this modale  to seperate file */}
             <Modal isOpen={isOpen} onClose={onClose}>
                 <ModalOverlay />
                 <ModalContent>
@@ -62,7 +62,7 @@ const Order = ({ status, id }: IOrder): JSX.Element => {
                     </ModalFooter>
                 </ModalContent>
             </Modal>
-        </>
+        </div>
     );
 };
 
