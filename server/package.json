@@ -16,6 +16,7 @@
     "license": "MIT",
     "devDependencies": {
         "@types/cors": "^2.8.17",
+        "@types/dotenv": "^8.2.0",
         "@types/express": "^4.17.21",
         "@types/node": "^20.11.16",
         "@types/uuid": "^9.0.8",
@@ -36,5 +37,9 @@
         "ts-node": "^10.9.2",
         "typescript": "^5.3.3",
         "uuid": "^9.0.1"
+    },
+    "dependencies": {
+        "@clerk/clerk-react": "^4.30.8",
+        "sqlite3": "^5.1.7"
     }
 }
