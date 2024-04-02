@@ -51,7 +51,8 @@ export default function Main({ orders }: IMain): JSX.Element {
         e.preventDefault();
         if (!draggedItem || draggedFromList === listIdentifier) return;
 
-        const newStatus = listIdentifier === "pendingOrders" ? OrderStatus.Pending : OrderStatus.Complete;
+        const newStatus: OrderStatus.Complete | OrderStatus.Pending =
+            listIdentifier === "pendingOrders" ? OrderStatus.Pending : OrderStatus.Complete;
 
         try {
             await updateOrderState(draggedItem, newStatus);
@@ -63,8 +64,11 @@ export default function Main({ orders }: IMain): JSX.Element {
 
             if (itemIndex !== -1) {
                 const [removedItem] = sourceList.splice(itemIndex, 1);
-                const updatedItem = { ...removedItem, status: newStatus };
-                const updatedDestinationList = [...destinationList, updatedItem];
+                const updatedItem: {
+                    status: OrderStatus.Complete | OrderStatus.Pending;
+                    id: string;
+                } = { ...removedItem, status: newStatus };
+                const updatedDestinationList: IOrder[] = [...destinationList, updatedItem];
 
                 if (draggedFromList === "pendingOrders") {
                     setPendingOrders([...sourceList]);
