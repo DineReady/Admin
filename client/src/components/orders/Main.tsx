@@ -17,9 +17,11 @@ interface IOrder {
 
 interface IMain {
     orders: IOrder[] | undefined;
+    refresh: () => void;
+    loading: boolean;
 }
 
-export default function Main({ orders }: IMain): JSX.Element {
+export default function Main({ orders, refresh, loading }: IMain): JSX.Element {
     const [pendingOrders, setPendingOrders] = useState<IOrder[]>([]);
     const [completeOrders, setCompleteOrders] = useState<IOrder[]>([]);
     const [draggedItem, setDraggedItem] = useState<IOrder | null>(null);
@@ -33,6 +35,8 @@ export default function Main({ orders }: IMain): JSX.Element {
                 id: order.id,
                 destination,
             });
+
+            refresh();
 
             toast({
                 title: "Order status updated",

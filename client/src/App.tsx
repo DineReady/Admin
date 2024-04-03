@@ -12,27 +12,28 @@ export default function App(): JSX.Element {
         setCreatedOrder: React.Dispatch<React.SetStateAction<boolean>>;
     };
 
+    async function fetchOrders(): Promise<void> {
+        try {
+            setLoading(true);
+            const response: Response = await fetch("http://localhost:8080/orders");
+            const data: React.SetStateAction<IOrder[] | undefined> = await response.json();
+            setOrders(data);
+            setCreatedOrder(false);
+        } catch (error: unknown) {
+            console.error((error as Error).message);
+        } finally {
+            setLoading(false);
+        }
+    }
+
     useEffect((): void => {
-        (async (): Promise<void> => {
-            try {
-                setLoading(true);
-                const response: Response = await fetch("http://localhost:8080/orders");
-                const data: React.SetStateAction<IOrder[] | undefined> = await response.json();
-                setOrders(data);
-                setCreatedOrder(false);
-            } catch (error: unknown) {
-                console.error((error as Error).message);
-            } finally {
-                setLoading(false);
-            }
-        })();
+        fetchOrders();
     }, []);
-    // }, [createdOrder, setCreatedOrder]);
 
     return (
         <AppContextProvider>
             <Header orders={orders?.length} />
-            <Main orders={orders} />
+            <Main orders={orders} refresh={fetchOrders} loading={loading} />
             <CreateOrder />
         </AppContextProvider>
     );
