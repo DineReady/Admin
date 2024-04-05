@@ -1,1 +1,1 @@
-export const CLIENT_DOMAIN = "https://dineready.vercel.app/";
+export const CLIENT_DOMAIN = "https://dine-ready.vercel.app/";
