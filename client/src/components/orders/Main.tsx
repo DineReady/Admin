@@ -110,12 +110,12 @@ export default function Main({ orders, refresh, loading }: IMain): JSX.Element {
 
     return (
         <main className="flex justify-between items-start h-full w-screen">
-            <section className="h-full px-10 py-5">
+            <section className="h-full px-10 py-5 min">
                 <h1 className="text-2xl font-black pb-3">Pending</h1>
                 <div
                     onDragOver={handleDragOver}
                     onDrop={(e) => handleDrop(e, "pendingOrders")}
-                    className="flex w-full items-center justify-start gap-2 flex-wrap overflow-x-auto"
+                    className="flex w-full items-center justify-start gap-2 flex-wrap overflow-x-auto min-w-32"
                 >
                     {orders
                         ?.filter((order: IOrder): boolean => order.status === OrderStatus.Pending)
@@ -127,7 +127,7 @@ export default function Main({ orders, refresh, loading }: IMain): JSX.Element {
                                     draggable
                                     onDragStart={() => handleDragStart(order, "pendingOrders")}
                                 >
-                                    <Order status={order.status} id={order.id} />
+                                    <Order status={order.status} id={order.id} refresh={refresh} />
                                 </div>
                             ),
                         )}
@@ -139,7 +139,7 @@ export default function Main({ orders, refresh, loading }: IMain): JSX.Element {
                 <div
                     onDragOver={handleDragOver}
                     onDrop={(e) => handleDrop(e, "completeOrders")}
-                    className="flex w-full items-center justify-start gap-2 flex-wrap overflow-x-auto"
+                    className="flex w-full items-center justify-start gap-2 flex-wrap overflow-x-auto min-w-32"
                 >
                     {orders
                         ?.filter((order: IOrder): boolean => order.status === OrderStatus.Complete)
@@ -151,7 +151,7 @@ export default function Main({ orders, refresh, loading }: IMain): JSX.Element {
                                     draggable
                                     onDragStart={() => handleDragStart(order, "completeOrders")}
                                 >
-                                    <Order status={order.status} id={order.id} />
+                                    <Order status={order.status} id={order.id} refresh={refresh} />
                                 </div>
                             ),
                         )}

@@ -5,6 +5,7 @@ export interface IHeader {
 export interface IOrder {
     status: OrderStatus;
     id: string;
+    refresh: () => void;
 }
 
 export interface IMain {
@@ -13,6 +14,7 @@ export interface IMain {
 export interface IAllOrders {
     orders: IOrder[];
     status: OrderStatus;
+    refresh: () => void;
 }
 
 export enum OrderStatus {
