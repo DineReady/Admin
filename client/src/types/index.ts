@@ -1,3 +1,7 @@
+import Login from '../lr/Login';
+
+export { Login, };
+
 export interface IHeader {
     orders: number | undefined;
 }

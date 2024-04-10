@@ -4,26 +4,20 @@ import cors from "cors";
 import dotenv from "dotenv";
 import express, { Express, Request, Response } from "express";
 import { allOrders, createOrder, deleteOrder, orderDetails, updateState, validateOrderId } from "./routes";
-import { db } from "./connection";
-import { Knex } from "knex";
 
 dotenv.config({ path: ".env" });
 const app: Express = express();
 const PORT: number = 8080;
+const mongoose = require("mongoose");
+const usersApi = require("./server/users");
+const loginApi = require("./server/login");
 
-db.schema.hasTable("orders").then((exists: boolean): void => {
-    if (!exists) {
-        db.schema
-            .createTable("orders", (table: Knex.CreateTableBuilder): void => {
-                table.string("id").notNullable().primary();
-                table.string("status").notNullable();
-                table.timestamps(true, true);
-            })
-            .then((): void => console.log("[server] Created table: orders"))
-            .catch((error: Error): void => console.error(`[server] Error creating table: ${error.message}`));
-    }
+const db = "mongodb+srv://admin:admintechni123@cluster0.zfvtf.mongodb.net/mailer?retryWrites=true&w=majority";
+
+mongoose.connect(db, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connection.on("connected", () => {
+    console.log("Connected with database");
 });
-
 {
     /* ============================= MIDDLEWARE ========================== */
 }
@@ -31,6 +25,8 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(express.json());
+app.use(usersApi);
+app.use(loginApi);
 
 {
     /* ============================= ROUTES ============================= */
